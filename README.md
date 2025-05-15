@@ -47,7 +47,7 @@ A full-stack todo application with user authentication and admin features.
 2.  Start the servers:
 
     ```bash
-    # Start backend server (http://localhost:5001)
+    # Start backend server (http://localhost:5002)
     cd server
     npm run dev
 
