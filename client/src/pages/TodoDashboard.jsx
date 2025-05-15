@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useTodo } from '../contexts/TodoContext';
-import { useAuth } from '../contexts/AuthContext';
-import TodoCard from '../components/TodoCard';
-import Button from '../components/Button';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useTodo } from "../contexts/TodoContext";
+import { useAuth } from "../contexts/AuthContext";
+import TodoCard from "../components/TodoCard";
+import Button from "../components/Button";
 
 const TodoDashboard = () => {
   const { todos, loading, error, fetchTodos } = useTodo();
   const { isAdmin } = useAuth();
   const [filter, setFilter] = useState({
-    category: '',
-    completed: ''
+    category: "",
+    completed: "",
   });
   const [isAdminView, setIsAdminView] = useState(false);
 
@@ -18,10 +18,10 @@ const TodoDashboard = () => {
     fetchTodos(isAdminView);
   }, [isAdminView]);
 
-  const filteredTodos = todos.filter(todo => {
+  const filteredTodos = todos.filter((todo) => {
     if (filter.category && todo.category !== filter.category) return false;
-    if (filter.completed === 'completed' && !todo.completed) return false;
-    if (filter.completed === 'pending' && todo.completed) return false;
+    if (filter.completed === "completed" && !todo.completed) return false;
+    if (filter.completed === "pending" && todo.completed) return false;
     return true;
   });
 
@@ -29,7 +29,7 @@ const TodoDashboard = () => {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-900">
-          {isAdminView ? 'All Todos' : 'My Todos'}
+          {isAdminView ? "All Todos" : "My Todos"}
         </h1>
         <div className="space-x-4">
           {isAdmin && (
@@ -37,7 +37,7 @@ const TodoDashboard = () => {
               variant="secondary"
               onClick={() => setIsAdminView(!isAdminView)}
             >
-              {isAdminView ? 'View My Todos' : 'View All Todos'}
+              {isAdminView ? "View My Todos" : "View All Todos"}
             </Button>
           )}
           <Link to="/todos/create">
@@ -51,7 +51,9 @@ const TodoDashboard = () => {
         <select
           className="input"
           value={filter.category}
-          onChange={(e) => setFilter(prev => ({ ...prev, category: e.target.value }))}
+          onChange={(e) =>
+            setFilter((prev) => ({ ...prev, category: e.target.value }))
+          }
         >
           <option value="">All Categories</option>
           <option value="Urgent">Urgent</option>
@@ -61,7 +63,9 @@ const TodoDashboard = () => {
         <select
           className="input"
           value={filter.completed}
-          onChange={(e) => setFilter(prev => ({ ...prev, completed: e.target.value }))}
+          onChange={(e) =>
+            setFilter((prev) => ({ ...prev, completed: e.target.value }))
+          }
         >
           <option value="">All Status</option>
           <option value="completed">Completed</option>
@@ -71,9 +75,7 @@ const TodoDashboard = () => {
 
       {/* Error State */}
       {error && (
-        <div className="bg-red-50 text-red-700 p-4 rounded mb-4">
-          {error}
-        </div>
+        <div className="bg-red-50 text-red-700 p-4 rounded mb-4">{error}</div>
       )}
 
       {/* Loading State */}
@@ -86,9 +88,7 @@ const TodoDashboard = () => {
               No todos found. Create one to get started!
             </div>
           ) : (
-            filteredTodos.map(todo => (
-              <TodoCard key={todo._id} todo={todo} />
-            ))
+            filteredTodos.map((todo) => <TodoCard key={todo._id} todo={todo} />)
           )}
         </div>
       )}
